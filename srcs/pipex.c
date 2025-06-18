@@ -6,11 +6,21 @@
 /*   By: isabegar <isabegar@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:13:17 by isabegar          #+#    #+#             */
-/*   Updated: 2025/04/21 23:46:38 by isabegar         ###   ########.fr       */
+/*   Updated: 2025/05/07 11:39:08 by isabegar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+static void	ft_putendl_fd(char *s, int fd)
+{
+	while (*s)
+	{
+		ft_putchar_fd(*s, fd);
+		s++;
+	}
+	write(fd, "\n", 1);
+}
 
 int	main(int argc, char *argv[])
 {
@@ -20,7 +30,7 @@ int	main(int argc, char *argv[])
 	
 	if (argc != 6)
 	{
-		fprintf(stderr, "Uso ./pipex <infile> <cmd1> <patron> <cmd2> <outfile>\n");
+		ft_putendl_fd("Use:./pipex <infile> <cmd1> <patron> <cmd2> <outfile>\n", 2);
 		return (EXIT_FAILURE);
 	}
 
