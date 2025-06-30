@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: isabegar <isabegar@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/15 15:13:38 by isabegar          #+#    #+#             */
-/*   Updated: 2025/04/21 23:41:25 by isabegar         ###   ########.fr       */
+/*   Created: 2025/06/25 17:04:39 by isabegar          #+#    #+#             */
+/*   Updated: 2025/06/28 16:08:53 by isabegar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,13 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include <sys/wait.h>
+#include <stddef.h>
 
-void	execute_cmd1(int infile, int pipe_fd[2], char *cmd1, char *pattern);
-void	execute_cmd2(int outfile, int pipe_fd[2], char *cmd2);
-void	call_forks(int infile, int outfile, int pipe_fd[2], char **argv);
-
+void	ft_putchar_fd(char c, int fd);
+void	ft_putendl_fd(char *s, int fd);
+char	**ft_split(char const *s, char c);
+//void	execute_cmd1(int infile, int pipe_fd[2], char *cmd1, char *cmd1_arg);
+//void	execute_cmd2(int outfile, int pipe_fd[2], char *cmd2);
+void	call_forks(int infile, int outfile, int pipe_fd[2], char **argv, char **envp);
+void	execute_cmd(char *cmd_str, char **envp);
 #endif

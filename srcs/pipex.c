@@ -5,48 +5,34 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: isabegar <isabegar@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/15 15:13:17 by isabegar          #+#    #+#             */
-/*   Updated: 2025/05/07 11:39:08 by isabegar         ###   ########.fr       */
+/*   Created: 2025/06/25 17:04:57 by isabegar          #+#    #+#             */
+/*   Updated: 2025/06/26 21:02:53 by isabegar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-static void	ft_putendl_fd(char *s, int fd)
-{
-	while (*s)
-	{
-		ft_putchar_fd(*s, fd);
-		s++;
-	}
-	write(fd, "\n", 1);
-}
-
-int	main(int argc, char *argv[])
+int	main(int argc, char *argv[], char *envp[])
 {
 	int	infile;
 	int	outfile;
 	int	pipe_fd[2];
-	
-	if (argc != 6)
-	{
-		ft_putendl_fd("Use:./pipex <infile> <cmd1> <patron> <cmd2> <outfile>\n", 2);
-		return (EXIT_FAILURE);
-	}
 
+	if (argc != 5)
+	{
+		ft_putendl_fd("Use:./pipex <infile> <cmd1> <cmd2> <outfile>\n", 2);
+		return (1);
+	}
 	infile = open(argv[1], O_RDONLY);
 	if (infile == -1)
-		return (perror("infile error"), EXIT_FAILURE);
-
-	outfile = open(argv[5], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		return (perror("infile error"), 1);
+	outfile = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (outfile == -1)
-		return (perror("outfile error"), close(infile), EXIT_FAILURE);
-
+		return (perror("outfile error"), close(infile), 1);
 	if (pipe(pipe_fd) == -1)
-		return (perror("pipe error"), close(infile), close(outfile), EXIT_FAILURE);
-
-	call_forks(infile, outfile, pipe_fd, argv);
+		return (perror("pipe error"), close(infile), close(outfile), 1);
+	call_forks(infile, outfile, pipe_fd, argv, envp);
 	close(infile);
 	close(outfile);
-	return (EXIT_SUCCESS);
+	return (0);
 }
