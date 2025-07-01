@@ -27,8 +27,9 @@ static char	**parse_cmd(char *cmd)
 	char	**args;
 
 	args = ft_split(cmd, ' ');
-	if (!args)
+	if (!args || !args[0])
 	{
+		ft_free_split(args);
 		perror("split error");
 		exit (1);
 	}
@@ -37,12 +38,13 @@ static char	**parse_cmd(char *cmd)
 
 void	execute_cmd(char *cmd_str, char **envp)
 {
-	(void)envp;
 	char	**args;
 
+	(void)envp;
 	args = parse_cmd(cmd_str);
 	execvp(args[0], args);
 	perror("execvp");
+	write(2, "execvp error\n", 13);
 	ft_free_split(args);
 	exit(1);
 }

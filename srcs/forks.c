@@ -18,7 +18,7 @@ static void	create_child1(int infile, int pipe_fd[2], char *cmd, char **envp)
 	{
 		perror("dup2 infile");
 		exit (1);
-	}	
+	}
 	if (dup2(pipe_fd[1], STDOUT_FILENO) == -1)
 	{
 		perror("dup2 pipe write");
@@ -46,7 +46,7 @@ static void	create_child2(int outfile, int pipe_fd[2], char *cmd, char **envp)
 	execute_cmd(cmd, envp);
 }
 
-void	call_forks(int infile, int outfile, int pipe_fd[2], char **argv, char **envp)
+void	call_forks(t_pipex *px)
 {
 	pid_t	pid1;
 	pid_t	pid2;
@@ -58,7 +58,7 @@ void	call_forks(int infile, int outfile, int pipe_fd[2], char **argv, char **env
 		exit (1);
 	}
 	if (pid1 == 0)
-		create_child1(infile, pipe_fd, argv[2], envp);
+		create_child1(px->infile, px->pipe_fd, px->argv[2], px->envp);
 	pid2 = fork();
 	if (pid2 == -1)
 	{
@@ -66,9 +66,9 @@ void	call_forks(int infile, int outfile, int pipe_fd[2], char **argv, char **env
 		exit (1);
 	}
 	if (pid2 == 0)
-		create_child2(outfile, pipe_fd, argv[3], envp);
-	close(pipe_fd[0]);
-	close(pipe_fd[1]);
+		create_child2(px->outfile, px->pipe_fd, px->argv[3], px->envp);
+	close(px->pipe_fd[0]);
+	close(px->pipe_fd[1]);
 	waitpid(pid1, NULL, 0);
 	waitpid(pid2, NULL, 0);
 }

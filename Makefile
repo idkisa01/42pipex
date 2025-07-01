@@ -6,13 +6,13 @@
 #    By: isabegar <isabegar@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/26 14:24:00 by isabegar          #+#    #+#              #
-#    Updated: 2025/06/28 16:56:47 by isabegar         ###   ########.fr        #
+#    Updated: 2025/07/01 00:38:41 by isabegar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = pipex
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 INCLUDES = -I includes
 
 SRCS = srcs/pipex.c srcs/forks.c srcs/execute.c srcs/utils.c
